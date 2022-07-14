@@ -13,5 +13,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <App />
       </PersistGate>
     </Provider>
-  </React.StrictMode>MI-2022-frontend-project
+  </React.StrictMode>
 );

@@ -1,0 +1,48 @@
+.contactList {
+  /* background-color: teal; */
+  padding: 20px 20px 0 20px;
+  border-radius: 6px;
+  margin: 0;
+}
+
+.contactInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  color: var(--main-text-color);
+}
+
+.contactInfo:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.deleteBtn {
+  /* max-width: 140px; */
+
+  margin-left: 20px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+
+  font-family: 'Patrick Hand', cursive;
+  font-weight: 500;
+  font-size: 16px;
+  background-color: var(--btn-color);
+  color: var(--additional-text-color);
+  box-shadow: var(--btn-shadow);
+
+  transition: 200ms;
+}
+
+.deleteBtn:focus,
+.deleteBtn:hover {
+  background-color: var(--active-btn-color);
+  box-shadow: var(--active-btn-shadow);
+  color: var(--active-btn-text-color);
+}
+
+.deleteBtn:hover + .contact {
+  font-size: 30px;
+  color: red;
+}

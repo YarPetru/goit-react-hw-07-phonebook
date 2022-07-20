@@ -1,29 +1,31 @@
 import s from './ContactList.module.css';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
-const ContactList = ({ contacts }) => {
+const ContactList = ({ contacts, filterValue, onDeleteContact, deleting }) => {
+  const filteredContacts = contacts.filter(item =>
+    item.name.toLowerCase().startsWith(filterValue.toLowerCase())
+  );
+
   return (
     <ul className={s.contactList}>
-      {contacts.map(contact => (
-        <li className={s.contactInfo}>
+      {filteredContacts.map(contact => (
+        <li key={contact.id} className={s.contactInfo}>
           <div className={s.contact}>
             {contact.name}: {contact.number}
           </div>
-          {/* <button
-            type="button"
-            className={s.deleteBtn}
-            onClick={() => onDeleteContact(contact.id)}
-          >
-            Delete
-          </button> */}
+          {!deleting && (
+            <button
+              type="button"
+              className={s.deleteBtn}
+              onClick={() => onDeleteContact(contact.id)}
+            >
+              Delete
+            </button>
+          )}
         </li>
       ))}
     </ul>
   );
-};
-
-ContactList.propTypes = {
-  contacts: PropTypes.array.isRequired,
 };
 
 export default ContactList;

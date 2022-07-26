@@ -1,8 +1,9 @@
 import { nanoid } from 'nanoid';
+
 import s from './Filter.module.css';
 import PropTypes from 'prop-types';
 
-const Filter = ({ onInputChange, filterValue }) => {
+const Filter = ({ onInputChange, value }) => {
   const inputFilterId = nanoid();
 
   return (
@@ -13,7 +14,7 @@ const Filter = ({ onInputChange, filterValue }) => {
       <input
         className={s.input}
         id={inputFilterId}
-        value={filterValue}
+        value={value}
         type="text"
         name="filter"
         title="Find contacts by name"
@@ -26,7 +27,6 @@ const Filter = ({ onInputChange, filterValue }) => {
 
 Filter.propTypes = {
   onInputChange: PropTypes.func.isRequired,
-  // filter: PropTypes.string.isRequired,
 };
 
 export default Filter;

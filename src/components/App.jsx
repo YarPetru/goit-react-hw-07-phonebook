@@ -1,62 +1,53 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux/es/exports';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Section from './Section';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
-import { changeFilter } from 'redux/contactsSlice';
 
 import {
-  useGetContactsQuery,
+  useGetFilteredContactsQuery,
   useDeleteContactMutation,
 } from 'redux/contactsSlice';
 
 export const App = () => {
+  const [filterValue, setFilterValue] = useState('');
+
   const {
-    data,
+    data: filteredContacts,
     isFetching,
-    // error, isLoading,
-  } = useGetContactsQuery();
+    // error,
+    // isLoading,
+  } = useGetFilteredContactsQuery(filterValue);
 
-  const [
-    deleteContact,
-    {
-      isLoading: isDeleting,
-      // isSuccess: isDeleteSuccess
-    },
-  ] = useDeleteContactMutation();
-
-  const dispatch = useDispatch();
-  const filter = useSelector(state => state.filter);
+  const [deleteContact, { isLoading: isDeleting, isSuccess: isDeleteSuccess }] =
+    useDeleteContactMutation();
 
   const handleInputChange = e => {
     e.preventDefault();
-    dispatch(changeFilter());
+    setFilterValue(e.currentTarget.value);
   };
 
   return (
     <>
-      {/* -------------------------------------------------- */}
       <Section title="Phonebook">
         <ContactForm />
       </Section>
       <Section title="Contacts">
         <Filter onInputChange={handleInputChange} />
         {isFetching && <h2>LOADING...</h2>}
-        {data && (
+        {filteredContacts && (
           <ContactList
-            contacts={data}
-            filterValue={filter}
+            contacts={filteredContacts}
             onDeleteContact={deleteContact}
             deleting={isDeleting}
           />
         )}
-        {/* ДОБАВИТЬ ТОАСТ С УСПЕШНЫМ УДАЛЕНИЕМ */}
-        {/* {isDeleteSuccess && alert('успешно удален')} */}
+        {isDeleteSuccess && toast.success('успешно удален')}
       </Section>
-      {/* <ToastContainer position="top-center" autoClose={2500} theme="colored" /> */}
+      <ToastContainer position="top-center" autoClose={2500} theme="colored" />
     </>
   );
 };
